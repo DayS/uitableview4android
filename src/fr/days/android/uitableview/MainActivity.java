@@ -1,4 +1,4 @@
-package fr.days.android.uitableview.adapter;
+package fr.days.android.uitableview;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,8 +7,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import fr.days.android.uitableview.R;
-import fr.days.android.uitableview.adapter.UITableViewAdapterInternal.IndexPath;
+import fr.days.android.uitableview.adapter.UITableViewAdapter;
+import fr.days.android.uitableview.adapter.UITableViewAdapterInternal;
+import fr.days.android.uitableview.adapter.UITableViewListener;
+import fr.days.android.uitableview.model.IndexPath;
 import fr.days.android.uitableview.view.UITableCellView;
 import fr.days.android.uitableview.view.UITableHeaderView;
 
@@ -55,13 +57,13 @@ public class MainActivity extends Activity {
 		}
 
 		@Override
-		public UITableHeaderView headerForGroup(Context context, int group) {
-			return new UITableHeaderView(context, "group " + group);
+		public UITableHeaderView headerForGroup(Context context, IndexPath indexPath) {
+			return new UITableHeaderView(context, indexPath, "group " + indexPath.getGroup());
 		}
 
 		@Override
-		public UITableCellView cellViewForRow(Context context, int group, int row) {
-			return new UITableCellView(context, "Cell number " + row + " in group " + group, "Subtitle " + row);
+		public UITableCellView cellViewForRow(Context context, IndexPath indexPath) {
+			return new UITableCellView(context, indexPath, "Cell number " + indexPath.getRow() + " in group " + indexPath.getGroup(), "Subtitle " + indexPath.getRow());
 		}
 
 		public void onItemClicked(int group, int row, UITableCellView cell) {

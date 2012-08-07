@@ -3,6 +3,8 @@ package fr.days.android.uitableview.adapter;
 import java.util.HashMap;
 import java.util.Map;
 
+import fr.days.android.uitableview.model.IndexPath;
+
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,9 +65,9 @@ public class UITableViewAdapterInternal extends BaseAdapter {
 		if (indexPath == null)
 			return null;
 		else if (indexPath.isHeader())
-			return tableViewAdapter.headerForGroup(context, indexPath.getGroup());
+			return tableViewAdapter.headerForGroup(context, indexPath);
 		else
-			return tableViewAdapter.cellViewForRow(context, indexPath.getGroup(), indexPath.getRow());
+			return tableViewAdapter.cellViewForRow(context, indexPath);
 	}
 
 	@Override
@@ -79,9 +81,9 @@ public class UITableViewAdapterInternal extends BaseAdapter {
 		if (indexPath == null)
 			return null;
 		else if (indexPath.isHeader())
-			return tableViewAdapter.headerForGroup(context, indexPath.getGroup());
+			return tableViewAdapter.headerForGroup(context, indexPath);
 		else
-			return tableViewAdapter.cellViewForRow(context, indexPath.getGroup(), indexPath.getRow());
+			return tableViewAdapter.cellViewForRow(context, indexPath);
 	}
 
 	/**
@@ -90,11 +92,11 @@ public class UITableViewAdapterInternal extends BaseAdapter {
 	 * @param position
 	 * @return An {@link IndexPath} if position is valid, <code>null</code> else
 	 */
-	IndexPath retrieveIndexPathByPosition(int position) {
+	public IndexPath retrieveIndexPathByPosition(int position) {
 		IndexPath indexPath = indexPaths.get(position);
 		if (indexPath == null) {
 			if (position == 0) { // Shortcut
-				indexPath = new IndexPath(0);
+				indexPath = new IndexPath(0, 0);
 			} else {
 				int numberOfRowsBefore = 0;
 				int numberOfGroups = tableViewAdapter.numberOfGroups();
@@ -102,15 +104,15 @@ public class UITableViewAdapterInternal extends BaseAdapter {
 					int numberOfRows = tableViewAdapter.numberOfRows(group);
 
 					if (position == numberOfRowsBefore) {
-						indexPath = new IndexPath(group);
+						indexPath = new IndexPath(position, group);
 						break;
 					}
 					if (position <= numberOfRowsBefore + numberOfRows) {
 						if (numberOfRowsBefore == 0) {
-							indexPath = new IndexPath(group, position - 1);
+							indexPath = new IndexPath(position, group, position - 1, numberOfRows);
 							break;
 						}
-						indexPath = new IndexPath(group, (position % numberOfRowsBefore) - 1);
+						indexPath = new IndexPath(position, group, (position % numberOfRowsBefore) - 1, numberOfRows);
 						break;
 					}
 
@@ -133,42 +135,6 @@ public class UITableViewAdapterInternal extends BaseAdapter {
 	public void notifyDataSetInvalidated() {
 		indexPaths.clear();
 		super.notifyDataSetInvalidated();
-	}
-
-	/**
-	 * This class represent an item by the group to which it belongs and his position in this group.
-	 */
-	class IndexPath {
-		private final int group;
-		private final int row;
-
-		public IndexPath(int group) {
-			this.group = group;
-			this.row = -1;
-		}
-
-		public IndexPath(int group, int row) {
-			this.group = group;
-			this.row = row;
-		}
-
-		public int getGroup() {
-			return group;
-		}
-
-		public int getRow() {
-			return row;
-		}
-
-		public boolean isHeader() {
-			return row == -1;
-		}
-
-		@Override
-		public String toString() {
-			return "IndexPath [group=" + group + ", row=" + row + "]";
-		}
-
 	}
 
 }

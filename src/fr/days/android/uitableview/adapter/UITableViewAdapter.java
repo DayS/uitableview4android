@@ -1,6 +1,7 @@
 package fr.days.android.uitableview.adapter;
 
 import android.content.Context;
+import fr.days.android.uitableview.model.IndexPath;
 import fr.days.android.uitableview.view.UITableCellView;
 import fr.days.android.uitableview.view.UITableHeaderView;
 
@@ -14,8 +15,8 @@ public abstract class UITableViewAdapter {
 		return 0;
 	}
 
-	public abstract UITableHeaderView headerForGroup(Context context, int group);
+	public abstract UITableHeaderView headerForGroup(Context context, IndexPath indexPath);
 
-	public abstract UITableCellView cellViewForRow(Context context, int group, int row);
+	public abstract UITableCellView cellViewForRow(Context context, IndexPath indexPath);
 
 }

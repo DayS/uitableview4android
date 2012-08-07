@@ -5,13 +5,16 @@ import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import fr.days.android.uitableview.R;
+import fr.days.android.uitableview.model.IndexPath;
 
 public class UITableHeaderView extends LinearLayout {
 
+	private final IndexPath indexPath;
 	private TextView title;
 
-	public UITableHeaderView(Context context) {
+	public UITableHeaderView(Context context, IndexPath indexPath) {
 		super(context);
+		this.indexPath = indexPath;
 
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		if (inflater != null) {
@@ -21,9 +24,13 @@ public class UITableHeaderView extends LinearLayout {
 		title = (TextView) findViewById(R.id.title);
 	}
 
-	public UITableHeaderView(Context context, String title) {
-		this(context);
+	public UITableHeaderView(Context context, IndexPath indexPath, String title) {
+		this(context, indexPath);
 		setTitle(title);
+	}
+
+	public IndexPath getIndexPath() {
+		return indexPath;
 	}
 
 	public String getTitle() {
