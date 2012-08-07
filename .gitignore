@@ -1,0 +1,11 @@
+.project
+.settings
+.classpath
+.metadata
+tmp
+target
+bin
+gen
+.apt_generated
+apt_generated
+.DS_Store
