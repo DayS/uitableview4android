@@ -5,18 +5,24 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import fr.days.android.uitableview.adapter.UITableCellListener;
-import fr.days.android.uitableview.adapter.UITableHeaderListener;
 import fr.days.android.uitableview.adapter.UITableViewAdapter;
 import fr.days.android.uitableview.adapter.UITableViewAdapterInternal;
 import fr.days.android.uitableview.adapter.UITableViewInternalAccessoryListener;
+import fr.days.android.uitableview.listener.OnCellAccessoryClickListener;
+import fr.days.android.uitableview.listener.OnCellClickListener;
+import fr.days.android.uitableview.listener.OnCellLongClickListener;
+import fr.days.android.uitableview.listener.OnHeaderClickListener;
+import fr.days.android.uitableview.listener.OnHeaderLongClickListener;
 import fr.days.android.uitableview.model.IndexPath;
 
 public class UITableView extends ListView implements android.widget.AdapterView.OnItemClickListener, android.widget.AdapterView.OnItemLongClickListener, UITableViewInternalAccessoryListener {
 
 	private UITableViewAdapterInternal tableViewAdapterInternal;
-	private UITableCellListener tableCellListener;
-	private UITableHeaderListener tableHeaderListener;
+	private OnCellClickListener onCellClickListener;
+	private OnCellLongClickListener onCellLongClickListener;
+	private OnCellAccessoryClickListener onCellAccessoryClickListener;
+	private OnHeaderClickListener onHeaderClickListener;
+	private OnHeaderLongClickListener onHeaderLongClickListener;
 
 	public UITableView(Context context) {
 		super(context);
@@ -44,23 +50,37 @@ public class UITableView extends ListView implements android.widget.AdapterView.
 		super.setAdapter(tableViewAdapterInternal);
 	}
 
-	public void setTableCellListener(UITableCellListener tableCellListener) {
-		this.tableCellListener = tableCellListener;
+	public void setOnCellClickListener(OnCellClickListener tableCellListener) {
+		this.onCellClickListener = tableCellListener;
 	}
 
-	public void setTableHeaderListener(UITableHeaderListener tableHeaderListener) {
-		this.tableHeaderListener = tableHeaderListener;
+	public void setOnCellLongClickListener(OnCellLongClickListener onCellLongClickListener) {
+		this.onCellLongClickListener = onCellLongClickListener;
+	}
+
+	public void setOnCellAccessoryClickListener(OnCellAccessoryClickListener onCellAccessoryClickListener) {
+		this.onCellAccessoryClickListener = onCellAccessoryClickListener;
+	}
+
+	public void setOnHeaderClickListener(OnHeaderClickListener onHeaderClickListener) {
+		this.onHeaderClickListener = onHeaderClickListener;
+	}
+
+	public void setOnHeaderLongClickListener(OnHeaderLongClickListener onHeaderLongClickListener) {
+		this.onHeaderLongClickListener = onHeaderLongClickListener;
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		if (tableCellListener != null) {
-			IndexPath indexPath = tableViewAdapterInternal.retrieveIndexPathByPosition(position);
-			if (indexPath != null) {
-				if (indexPath.isHeader()) {
-					tableHeaderListener.onHeaderClick(indexPath);
-				} else {
-					tableCellListener.onCellClick(indexPath);
+		IndexPath indexPath = tableViewAdapterInternal.retrieveIndexPathByPosition(position);
+		if (indexPath != null) {
+			if (indexPath.isHeader()) {
+				if (onHeaderClickListener != null) {
+					onHeaderClickListener.onHeaderClick(indexPath);
+				}
+			} else {
+				if (onCellClickListener != null) {
+					onCellClickListener.onCellClick(indexPath);
 				}
 			}
 		}
@@ -68,13 +88,15 @@ public class UITableView extends ListView implements android.widget.AdapterView.
 
 	@Override
 	public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-		if (tableCellListener != null) {
-			IndexPath indexPath = tableViewAdapterInternal.retrieveIndexPathByPosition(position);
-			if (indexPath != null) {
-				if (indexPath.isHeader()) {
-					return tableHeaderListener.onHeaderLongClick(indexPath);
-				} else {
-					return tableCellListener.onCellLongClick(indexPath);
+		IndexPath indexPath = tableViewAdapterInternal.retrieveIndexPathByPosition(position);
+		if (indexPath != null) {
+			if (indexPath.isHeader()) {
+				if (onHeaderLongClickListener != null) {
+					return onHeaderLongClickListener.onHeaderLongClick(indexPath);
+				}
+			} else {
+				if (onCellLongClickListener != null) {
+					return onCellLongClickListener.onCellLongClick(indexPath);
 				}
 			}
 		}
@@ -83,9 +105,9 @@ public class UITableView extends ListView implements android.widget.AdapterView.
 
 	@Override
 	public void onCellAccessoryClick(IndexPath indexPath) {
-		if (tableCellListener != null) {
+		if (onCellAccessoryClickListener != null) {
 			if (indexPath != null && !indexPath.isHeader()) {
-				tableCellListener.onCellAccessoryClick(indexPath);
+				onCellAccessoryClickListener.onCellAccessoryClick(indexPath);
 			}
 		}
 	}
