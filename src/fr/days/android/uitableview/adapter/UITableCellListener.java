@@ -2,7 +2,7 @@ package fr.days.android.uitableview.adapter;
 
 import fr.days.android.uitableview.model.IndexPath;
 
-public interface UITableViewListener {
+public interface UITableCellListener {
 
 	void onCellClick(IndexPath indexPath);
 

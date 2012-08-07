@@ -3,12 +3,12 @@ package fr.days.android.uitableview.adapter;
 import java.util.HashMap;
 import java.util.Map;
 
-import fr.days.android.uitableview.model.IndexPath;
-
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import fr.days.android.uitableview.model.IndexPath;
+import fr.days.android.uitableview.view.UITableCellView;
 
 /**
  * Internal adapter used by Android ListView.
@@ -23,6 +23,8 @@ public class UITableViewAdapterInternal extends BaseAdapter {
 
 	private final Context context;
 	private final UITableViewAdapter tableViewAdapter;
+
+	private UITableViewInternalAccessoryListener internalAccessoryListener;
 	private Map<Integer, IndexPath> indexPaths = new HashMap<Integer, IndexPath>();
 
 	/**
@@ -62,12 +64,15 @@ public class UITableViewAdapterInternal extends BaseAdapter {
 	@Override
 	public Object getItem(int position) {
 		IndexPath indexPath = retrieveIndexPathByPosition(position);
-		if (indexPath == null)
+		if (indexPath == null) {
 			return null;
-		else if (indexPath.isHeader())
+		} else if (indexPath.isHeader()) {
 			return tableViewAdapter.headerForGroup(context, indexPath);
-		else
-			return tableViewAdapter.cellViewForRow(context, indexPath);
+		} else {
+			UITableCellView cellView = tableViewAdapter.cellViewForRow(context, indexPath);
+			cellView.setInternalAccessoryListener(internalAccessoryListener);
+			return cellView;
+		}
 	}
 
 	@Override
@@ -77,13 +82,7 @@ public class UITableViewAdapterInternal extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		IndexPath indexPath = retrieveIndexPathByPosition(position);
-		if (indexPath == null)
-			return null;
-		else if (indexPath.isHeader())
-			return tableViewAdapter.headerForGroup(context, indexPath);
-		else
-			return tableViewAdapter.cellViewForRow(context, indexPath);
+		return (View) getItem(position);
 	}
 
 	/**
@@ -135,6 +134,14 @@ public class UITableViewAdapterInternal extends BaseAdapter {
 	public void notifyDataSetInvalidated() {
 		indexPaths.clear();
 		super.notifyDataSetInvalidated();
+	}
+
+	public UITableViewInternalAccessoryListener getInternalAccessoryListener() {
+		return internalAccessoryListener;
+	}
+
+	public void setInternalAccessoryListener(UITableViewInternalAccessoryListener internalAccessoryListener) {
+		this.internalAccessoryListener = internalAccessoryListener;
 	}
 
 }
