@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import fr.days.android.uitableview.R;
 import fr.days.android.uitableview.drawable.UITableCellDrawable;
+import fr.days.android.uitableview.model.AccessoryType;
 import fr.days.android.uitableview.model.IndexPath;
 
 public class UITableCellView extends LinearLayout {
@@ -22,10 +23,10 @@ public class UITableCellView extends LinearLayout {
 	private static int[] color_line2_pressed;
 
 	private final IndexPath indexPath;
-	private ImageView image;
-	private TextView title;
-	private TextView subtitle;
-	private View accessory;
+	private ImageView imageView;
+	private TextView titleView;
+	private TextView subtitleView;
+	private ImageView accessoryView;
 
 	public UITableCellView(Context context, IndexPath indexPath) {
 		super(context);
@@ -38,10 +39,10 @@ public class UITableCellView extends LinearLayout {
 			inflater.inflate(R.layout.table_cell, this);
 		}
 
-		image = (ImageView) findViewById(R.id.image);
-		title = (TextView) findViewById(R.id.title);
-		subtitle = (TextView) findViewById(R.id.subtitle);
-		accessory = (View) findViewById(R.id.accessory);
+		imageView = (ImageView) findViewById(R.id.image);
+		titleView = (TextView) findViewById(R.id.title);
+		subtitleView = (TextView) findViewById(R.id.subtitle);
+		accessoryView = (ImageView) findViewById(R.id.accessory);
 
 		int[] colorDefault = indexPath.getRow() % 2 == 0 ? color_line1_default : color_line2_default;
 		int[] colorPressed = indexPath.getRow() % 2 == 0 ? color_line1_pressed : color_line2_pressed;
@@ -92,53 +93,73 @@ public class UITableCellView extends LinearLayout {
 	}
 
 	public ImageView getImage() {
-		return image;
+		return imageView;
 	}
 
-	public void setImage(ImageView image) {
-		if (image == null) {
-			this.image.setVisibility(View.VISIBLE);
+	public void setImage(Integer imageResource) {
+		if (imageResource == null) {
+			imageView.setVisibility(View.GONE);
 		} else {
-			this.image.setVisibility(View.GONE);
+			imageView.setVisibility(View.VISIBLE);
 		}
+		imageView.setImageResource(imageResource);
+	}
 
-		this.image = image;
+	public void setImage(Drawable drawable) {
+		if (drawable == null) {
+			imageView.setVisibility(View.GONE);
+		} else {
+			imageView.setVisibility(View.VISIBLE);
+		}
+		imageView.setImageDrawable(drawable);
 	}
 
 	public String getTitle() {
-		return title.getText().toString();
+		return titleView.getText().toString();
 	}
 
 	public void setTitle(String title) {
-		this.title.setText(title);
+		this.titleView.setText(title);
 	}
 
 	public String getSubtitle() {
-		return subtitle.getText().toString();
+		return subtitleView.getText().toString();
 	}
 
 	public void setSubtitle(String subtitle) {
 		if (subtitle == null || subtitle.isEmpty()) {
-			this.subtitle.setVisibility(View.VISIBLE);
+			subtitleView.setVisibility(View.GONE);
 		} else {
-			this.subtitle.setVisibility(View.GONE);
+			subtitleView.setVisibility(View.VISIBLE);
 		}
-
-		this.subtitle.setText(subtitle);
+		subtitleView.setText(subtitle);
 	}
 
-	public View getAccessory() {
-		return accessory;
+	public ImageView getAccessory() {
+		return accessoryView;
 	}
 
-	public void setAccessory(View accessory) {
-		if (accessory == null) {
-			this.accessory.setVisibility(View.VISIBLE);
+	public void setAccessory(AccessoryType accessoryType) {
+		if (accessoryType == AccessoryType.NONE) {
+			accessoryView.setVisibility(View.GONE);
 		} else {
-			this.accessory.setVisibility(View.GONE);
-		}
+			accessoryView.setVisibility(View.VISIBLE);
 
-		this.accessory = accessory;
+			switch (accessoryType) {
+			case DISCLOSURE:
+				accessoryView.setImageResource(R.drawable.accessory_disclosure);
+				break;
+			}
+		}
+	}
+
+	public void setAccessory(Drawable drawable) {
+		if (drawable == null) {
+			imageView.setVisibility(View.GONE);
+		} else {
+			imageView.setVisibility(View.VISIBLE);
+		}
+		imageView.setImageDrawable(drawable);
 	}
 
 }

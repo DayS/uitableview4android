@@ -10,7 +10,8 @@
         android:id="@+id/image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription=""
+        android:layout_gravity="left"
+        android:contentDescription="image"
         android:visibility="gone" />
 
     <LinearLayout
@@ -27,7 +28,6 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="title"
             android:textColor="@color/text_color_selector"
             android:textSize="16.0dip"
             android:textStyle="bold" />
@@ -38,17 +38,17 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="subtitle"
             android:textColor="@color/text_color_selector"
             android:textSize="12.0dip"
             android:visibility="gone" />
     </LinearLayout>
 
-    <View
+    <ImageView
         android:id="@+id/accessory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription=""
+        android:layout_gravity="right"
+        android:contentDescription="accessory"
         android:visibility="gone" />
 
 </LinearLayout>
