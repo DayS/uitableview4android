@@ -4,6 +4,6 @@ import fr.days.android.uitableview.view.UITableCellView;
 
 public interface UITableViewListener {
 
-	void itemClicked(int group, int row, UITableCellView cell);
+	void onItemClicked(int group, int row, UITableCellView cell);
 
 }

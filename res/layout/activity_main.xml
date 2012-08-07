@@ -3,14 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <fr.days.android.uitableview.view.UITableView
-            android:id="@+id/tableView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </ScrollView>
+    <ListView
+        android:id="@+id/listView"
+        style="@style/UITableView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" >
+    </ListView>
 
 </RelativeLayout>
