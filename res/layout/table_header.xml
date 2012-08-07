@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="60dip"
+    android:layout_height="50dp"
     android:orientation="horizontal"
-    android:paddingBottom="10dip"
-    android:paddingLeft="10dip"
+    android:paddingBottom="10dp"
+    android:paddingLeft="10dp"
     android:paddingRight="10dp" >
 
     <TextView
@@ -17,9 +17,8 @@
         android:shadowDx="0"
         android:shadowDy="1"
         android:shadowRadius="1"
-        android:text="title"
         android:textColor="#4C566C"
-        android:textSize="18.0dip"
+        android:textSize="18.0dp"
         android:textStyle="bold" />
 
 </LinearLayout>
