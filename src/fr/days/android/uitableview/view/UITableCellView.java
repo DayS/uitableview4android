@@ -48,19 +48,24 @@ public class UITableCellView extends LinearLayout {
 
 		// Assign the right backgroundDrawable according to the cell's position in the group
 		Drawable backgroundDrawable;
-		if (indexPath.getNumberOfRows() == 1) {
+		if (indexPath.getRowsCount() == 1) {
 			backgroundDrawable = new UITableCellDrawable(10.0f, 10.0f, colorDefault, colorPressed);
 		} else {
-			if (indexPath.getRow() == 0) {
+			if (indexPath.isFirstCellOfGroup()) {
 				backgroundDrawable = new UITableCellDrawable(10.0f, 0, colorDefault, colorPressed);
-			} else if (indexPath.getRow() == indexPath.getNumberOfRows() - 1) {
+			} else if (indexPath.isLastCellOfGroup()) {
 				backgroundDrawable = new UITableCellDrawable(0, 10.0f, colorDefault, colorPressed);
 			} else {
 				backgroundDrawable = new UITableCellDrawable(0, 0, colorDefault, colorPressed);
 			}
 		}
 
-		setBackgroundDrawable(new InsetDrawable(backgroundDrawable, INSET, 0, INSET, 0));
+		// Add extra space if this cell is the last one
+		int bottomInset = 0;
+		if (indexPath.isLastCell()) {
+			bottomInset = INSET;
+		}
+		setBackgroundDrawable(new InsetDrawable(backgroundDrawable, INSET, 0, INSET, bottomInset));
 	}
 
 	public UITableCellView(Context context, IndexPath indexPath, String title, String subtitle) {

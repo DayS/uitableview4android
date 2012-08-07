@@ -7,17 +7,19 @@ public class IndexPath {
 	private final int position;
 	private final int group;
 	private final int row;
-	private final int numberOfRows;
+	private final int groupsCount;
+	private final int rowsCount;
 
-	public IndexPath(int position, int group) {
-		this(position, group, -1, 0);
+	public IndexPath(int position, int group, int groupCount) {
+		this(position, group, -1, groupCount, 0);
 	}
 
-	public IndexPath(int position, int group, int row, int numberOfRows) {
+	public IndexPath(int position, int group, int row, int groupsCount, int rowsCount) {
 		this.position = position;
 		this.group = group;
 		this.row = row;
-		this.numberOfRows = numberOfRows;
+		this.groupsCount = groupsCount;
+		this.rowsCount = rowsCount;
 	}
 
 	public int getPosition() {
@@ -32,17 +34,40 @@ public class IndexPath {
 		return row;
 	}
 
-	public int getNumberOfRows() {
-		return numberOfRows;
+	public int getGroupsCount() {
+		return groupsCount;
+	}
+
+	public int getRowsCount() {
+		return rowsCount;
 	}
 
 	public boolean isHeader() {
 		return row == -1;
 	}
 
-	@Override
-	public String toString() {
-		return "IndexPath [position=" + position + ", group=" + group + ", row=" + row + "/" + numberOfRows + "]";
+	public boolean isFirstGroup() {
+		return group == 0;
 	}
 
+	public boolean isLastGroup() {
+		return group == groupsCount - 1;
+	}
+
+	public boolean isFirstCellOfGroup() {
+		return row == 0;
+	}
+
+	public boolean isLastCellOfGroup() {
+		return row == rowsCount - 1;
+	}
+
+	public boolean isLastCell() {
+		return isLastGroup() && isLastCellOfGroup();
+	}
+
+	@Override
+	public String toString() {
+		return "IndexPath [position=" + position + ", group=" + group + "/" + groupsCount + ", row=" + row + "/" + rowsCount + "]";
+	}
 }

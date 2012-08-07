@@ -95,24 +95,24 @@ public class UITableViewAdapterInternal extends BaseAdapter {
 	public IndexPath retrieveIndexPathByPosition(int position) {
 		IndexPath indexPath = indexPaths.get(position);
 		if (indexPath == null) {
+			int numberOfGroups = tableViewAdapter.numberOfGroups();
 			if (position == 0) { // Shortcut
-				indexPath = new IndexPath(0, 0);
+				indexPath = new IndexPath(0, 0, numberOfGroups);
 			} else {
 				int numberOfRowsBefore = 0;
-				int numberOfGroups = tableViewAdapter.numberOfGroups();
 				for (int group = 0; group < numberOfGroups; group++) {
 					int numberOfRows = tableViewAdapter.numberOfRows(group);
 
 					if (position == numberOfRowsBefore) {
-						indexPath = new IndexPath(position, group);
+						indexPath = new IndexPath(position, group, numberOfGroups);
 						break;
 					}
 					if (position <= numberOfRowsBefore + numberOfRows) {
 						if (numberOfRowsBefore == 0) {
-							indexPath = new IndexPath(position, group, position - 1, numberOfRows);
+							indexPath = new IndexPath(position, group, position - 1, numberOfGroups, numberOfRows);
 							break;
 						}
-						indexPath = new IndexPath(position, group, (position % numberOfRowsBefore) - 1, numberOfRows);
+						indexPath = new IndexPath(position, group, (position % numberOfRowsBefore) - 1, numberOfGroups, numberOfRows);
 						break;
 					}
 
