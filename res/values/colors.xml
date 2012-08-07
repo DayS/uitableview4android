@@ -2,15 +2,15 @@
 <resources>
 
     <!-- LIST BORDER COLOR -->
-    <color name="rounded_container_border">#FFB7BABB</color>
+    <color name="cell_border">#FFD3D3D3</color>
 
     <!-- ITEM BACKGROUND COLOR - LINE 1 - DEFAULT -->
-    <color name="base_start_color_line1_default">#FFFFFFFF</color>
-    <color name="base_end_color_line1_default">#FFFFFFFF</color>
+    <color name="base_start_color_line1_default">#FFEEF0EF</color>
+    <color name="base_end_color_line1_default">#FFEEF0EF</color>
 
     <!-- ITEM BACKGROUND COLOR - LINE 2 - DEFAULT -->
-    <color name="base_start_color_line2_default">#FFEEF0EF</color>
-    <color name="base_end_color_line2_default">#FFEEF0EF</color>
+    <color name="base_start_color_line2_default">#FFFFFFFF</color>
+    <color name="base_end_color_line2_default">#FFFFFFFF</color>
 
     <!-- ITEM BACKGROUND COLOR - LINE 1 - PRESSED -->
     <color name="base_start_color_line1_pressed">#FF3590C4</color>

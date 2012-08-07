@@ -21,6 +21,7 @@ public class UITableCellView extends LinearLayout {
 	private static int[] color_line2_default;
 	private static int[] color_line1_pressed;
 	private static int[] color_line2_pressed;
+	private static int border_color;
 
 	private final IndexPath indexPath;
 	private ImageView imageView;
@@ -50,14 +51,14 @@ public class UITableCellView extends LinearLayout {
 		// Assign the right backgroundDrawable according to the cell's position in the group
 		Drawable backgroundDrawable;
 		if (indexPath.getRowsCount() == 1) {
-			backgroundDrawable = new UITableCellDrawable(10.0f, 10.0f, colorDefault, colorPressed);
+			backgroundDrawable = new UITableCellDrawable(10.0f, 10.0f, colorDefault, colorPressed, border_color);
 		} else {
 			if (indexPath.isFirstCellOfGroup()) {
-				backgroundDrawable = new UITableCellDrawable(10.0f, 0, colorDefault, colorPressed);
+				backgroundDrawable = new UITableCellDrawable(10.0f, 0, colorDefault, colorPressed, border_color);
 			} else if (indexPath.isLastCellOfGroup()) {
-				backgroundDrawable = new UITableCellDrawable(0, 10.0f, colorDefault, colorPressed);
+				backgroundDrawable = new UITableCellDrawable(0, 10.0f, colorDefault, colorPressed, border_color);
 			} else {
-				backgroundDrawable = new UITableCellDrawable(0, 0, colorDefault, colorPressed);
+				backgroundDrawable = new UITableCellDrawable(0, 0, colorDefault, colorPressed, border_color);
 			}
 		}
 
@@ -81,6 +82,7 @@ public class UITableCellView extends LinearLayout {
 			color_line2_default = new int[] { getColor(R.color.base_start_color_line2_default), getColor(R.color.base_end_color_line2_default) };
 			color_line1_pressed = new int[] { getColor(R.color.base_start_color_line1_pressed), getColor(R.color.base_end_color_line1_pressed) };
 			color_line2_pressed = new int[] { getColor(R.color.base_start_color_line2_pressed), getColor(R.color.base_end_color_line2_pressed) };
+			border_color = getColor(R.color.cell_border);
 		}
 	}
 
