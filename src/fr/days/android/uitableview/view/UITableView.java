@@ -105,11 +105,24 @@ public class UITableView extends ListView implements android.widget.AdapterView.
 
 	@Override
 	public void onCellAccessoryClick(IndexPath indexPath) {
-		if (onCellAccessoryClickListener != null) {
-			if (indexPath != null && !indexPath.isHeader()) {
+		if (indexPath != null && !indexPath.isHeader()) {
+			// Trigger the accessory listener if set, else tigger the cell listener
+			if (onCellAccessoryClickListener != null) {
 				onCellAccessoryClickListener.onCellAccessoryClick(indexPath);
+			} else if (onCellClickListener != null) {
+				onCellClickListener.onCellClick(indexPath);
 			}
 		}
+	}
+
+	@Override
+	public boolean onCellAccessoryLongClick(IndexPath indexPath) {
+		if (indexPath != null && !indexPath.isHeader()) {
+			if (onCellLongClickListener != null) {
+				return onCellLongClickListener.onCellLongClick(indexPath);
+			}
+		}
+		return false;
 	}
 
 }

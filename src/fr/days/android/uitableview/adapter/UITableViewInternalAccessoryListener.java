@@ -11,5 +11,7 @@ import fr.days.android.uitableview.model.IndexPath;
 public interface UITableViewInternalAccessoryListener {
 
 	void onCellAccessoryClick(IndexPath indexPath);
+	
+	boolean onCellAccessoryLongClick(IndexPath indexPath);
 
 }

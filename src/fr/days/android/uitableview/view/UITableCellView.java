@@ -191,6 +191,12 @@ public class UITableCellView extends LinearLayout {
 					internalAccessoryListener.onCellAccessoryClick(UITableCellView.this.indexPath);
 				}
 			});
+			accessoryView.setOnLongClickListener(new OnLongClickListener() {
+				@Override
+				public boolean onLongClick(View v) {
+					return internalAccessoryListener.onCellAccessoryLongClick(UITableCellView.this.indexPath);
+				}
+			});
 		}
 
 		this.internalAccessoryListener = internalAccessoryListener;
