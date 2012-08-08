@@ -91,30 +91,31 @@ public class UITableViewAdapterInternal extends BaseAdapter {
 	 * @param position
 	 * @return An {@link IndexPath} if position is valid, <code>null</code> else
 	 */
-	public IndexPath retrieveIndexPathByPosition(int position) {
+	public IndexPath retrieveIndexPathByPosition(final int position) {
 		IndexPath indexPath = indexPaths.get(position);
 		if (indexPath == null) {
 			int numberOfGroups = tableViewAdapter.numberOfGroups();
-			if (position == 0) { // Shortcut
+
+			if (position == 0) { // Shortcut for the first item
 				indexPath = new IndexPath(0, 0, numberOfGroups);
+
 			} else {
 				int numberOfRowsBefore = 0;
 				for (int group = 0; group < numberOfGroups; group++) {
 					int numberOfRows = tableViewAdapter.numberOfRows(group);
 
+					// Header
 					if (position == numberOfRowsBefore) {
 						indexPath = new IndexPath(position, group, numberOfGroups);
 						break;
 					}
+					// Cell
 					if (position <= numberOfRowsBefore + numberOfRows) {
-						if (numberOfRowsBefore == 0) {
-							indexPath = new IndexPath(position, group, position - 1, numberOfGroups, numberOfRows);
-							break;
-						}
-						indexPath = new IndexPath(position, group, (position % numberOfRowsBefore) - 1, numberOfGroups, numberOfRows);
+						indexPath = new IndexPath(position, group, position - numberOfRowsBefore - 1, numberOfGroups, numberOfRows);
 						break;
 					}
 
+					// This position doesn't fit to this group, see the next one
 					numberOfRowsBefore += numberOfRows + 1; // rows + header
 				}
 			}
