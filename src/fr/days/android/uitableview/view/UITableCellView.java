@@ -101,7 +101,7 @@ public class UITableCellView extends LinearLayout {
 		return indexPath;
 	}
 
-	public ImageView getImage() {
+	public ImageView getImageView() {
 		return imageView;
 	}
 
@@ -123,12 +123,20 @@ public class UITableCellView extends LinearLayout {
 		imageView.setImageDrawable(drawable);
 	}
 
+	public TextView getTitleView() {
+		return titleView;
+	}
+
 	public String getTitle() {
 		return titleView.getText().toString();
 	}
 
 	public void setTitle(String title) {
 		this.titleView.setText(title);
+	}
+
+	public TextView getSubtitleView() {
+		return subtitleView;
 	}
 
 	public String getSubtitle() {
@@ -144,7 +152,7 @@ public class UITableCellView extends LinearLayout {
 		subtitleView.setText(subtitle);
 	}
 
-	public ImageView getAccessory() {
+	public ImageView getAccessoryView() {
 		return accessoryView;
 	}
 
