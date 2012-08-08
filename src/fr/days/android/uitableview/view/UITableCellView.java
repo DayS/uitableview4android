@@ -164,11 +164,11 @@ public class UITableCellView extends LinearLayout {
 
 	public void setAccessory(Drawable drawable) {
 		if (drawable == null) {
-			imageView.setVisibility(View.GONE);
+			accessoryView.setVisibility(View.GONE);
 		} else {
-			imageView.setVisibility(View.VISIBLE);
+			accessoryView.setVisibility(View.VISIBLE);
 		}
-		imageView.setImageDrawable(drawable);
+		accessoryView.setImageDrawable(drawable);
 	}
 
 	public UITableViewInternalAccessoryListener getInternalAccessoryListener() {
