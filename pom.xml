@@ -1,0 +1,70 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>fr.days.android</groupId>
+	<artifactId>uitableview</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>apklib</packaging>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.6</java.version>
+
+		<maven.compiler.plugin.version>2.3.2</maven.compiler.plugin.version>
+		<maven-release-plugin.version>2.3.2</maven-release-plugin.version>
+		<android.maven.plugin.version>3.3.0</android.maven.plugin.version>
+
+		<android.sdk.version>2.3.3</android.sdk.version>
+		<android.sdk.level>10</android.sdk.level>
+	</properties>
+
+	<dependencies>
+		<!-- Android SDK -->
+		<dependency>
+			<groupId>com.google.android</groupId>
+			<artifactId>android</artifactId>
+			<version>${android.sdk.version}</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven.compiler.plugin.version}</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>${maven-release-plugin.version}</version>
+				<configuration>
+					<tagNameFormat>v@{project.version}</tagNameFormat>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+				<artifactId>android-maven-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<attachSources>true</attachSources>
+					<sdk>
+						<path>${env.ANDROID_HOME}</path>
+						<platform>${android.sdk.level}</platform>
+					</sdk>
+					<undeployBeforeDeploy>false</undeployBeforeDeploy>
+					<dex>
+						<jvmArguments>
+							<argument>-Xmx512m</argument>
+						</jvmArguments>
+					</dex>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
