@@ -21,14 +21,15 @@
         android:layout_height="match_parent"
         android:layout_toRightOf="@+id/image"
         android:gravity="center_vertical"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp" >
 
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:paddingLeft="5dp"
             android:singleLine="true"
             android:textColor="@color/text_color_selector"
             android:textSize="16.0dp"
@@ -40,7 +41,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/title"
             android:ellipsize="end"
-            android:paddingLeft="5dp"
             android:singleLine="true"
             android:textColor="@color/text_color_selector"
             android:textSize="12.0dp"
