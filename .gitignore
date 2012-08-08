@@ -1,11 +1,17 @@
-.project
-.settings
-.classpath
-.metadata
-tmp
-target
-bin
-gen
-.apt_generated
-apt_generated
+# OS junk files
 .DS_Store
+[Tt]humbs.db
+
+# Temp files
+*~
+
+# Project files
+.class
+.classpath
+.project
+.settings/
+target/
+bin/
+gen/
+
+.springBeans
