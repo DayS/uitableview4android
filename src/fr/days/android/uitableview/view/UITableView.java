@@ -1,6 +1,8 @@
 package fr.days.android.uitableview.view;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,20 +28,26 @@ public class UITableView extends ListView implements android.widget.AdapterView.
 
 	public UITableView(Context context) {
 		super(context);
-		initInternalListeners();
+		init();
 	}
 
 	public UITableView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		initInternalListeners();
+		init();
 	}
 
 	public UITableView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		initInternalListeners();
+		init();
 	}
 
-	private void initInternalListeners() {
+	private void init() {
+		setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		setBackgroundColor(Color.parseColor("#f1f6f9"));
+		setDivider(new ColorDrawable(Color.TRANSPARENT));
+		setSelector(new ColorDrawable(Color.TRANSPARENT));
+
+		// Init internal listeners
 		setOnItemClickListener(this);
 		setOnItemLongClickListener(this);
 	}
