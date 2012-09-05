@@ -1,9 +1,11 @@
 package fr.days.android.uitableview.view;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.TouchDelegate;
 import android.view.View;
@@ -123,6 +125,15 @@ public class UITableCellView extends LinearLayout {
 		imageView.setImageDrawable(drawable);
 	}
 
+	public void setImageBitmap(Bitmap bitmap) {
+		if (bitmap == null) {
+			imageView.setVisibility(View.GONE);
+		} else {
+			imageView.setVisibility(View.VISIBLE);
+		}
+		imageView.setImageBitmap(bitmap);
+	}
+
 	public TextView getTitleView() {
 		return titleView;
 	}
@@ -144,7 +155,7 @@ public class UITableCellView extends LinearLayout {
 	}
 
 	public void setSubtitle(String subtitle) {
-		if (subtitle == null || subtitle.isEmpty()) {
+		if (TextUtils.isEmpty(subtitle)) {
 			subtitleView.setVisibility(View.GONE);
 		} else {
 			subtitleView.setVisibility(View.VISIBLE);
