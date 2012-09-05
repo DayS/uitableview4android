@@ -22,11 +22,9 @@ public class UITableCellView extends LinearLayout {
 
 	private static final int INSET = 10;
 
-	private static int[] color_line1_default;
-	private static int[] color_line2_default;
-	private static int[] color_line1_pressed;
-	private static int[] color_line2_pressed;
-	private static int border_color;
+	private static int[] colorLineDefault;
+	private static int[] colorLinePressed;
+	private static int borderColor = Integer.MIN_VALUE;
 
 	private final IndexPath indexPath;
 	private ImageView imageView;
@@ -39,7 +37,11 @@ public class UITableCellView extends LinearLayout {
 		super(context);
 		this.indexPath = indexPath;
 
-		initColors();
+		if (borderColor == Integer.MIN_VALUE) {
+			borderColor = getColor(R.color.cell_border);
+			colorLineDefault = new int[] { getResources().getColor(R.color.base_start_color_line_default), getResources().getColor(R.color.base_end_color_line_default) };
+			colorLinePressed = new int[] { getResources().getColor(R.color.base_start_color_line_pressed), getResources().getColor(R.color.base_end_color_line_pressed) };
+		}
 
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		if (inflater != null) {
@@ -51,29 +53,8 @@ public class UITableCellView extends LinearLayout {
 		subtitleView = (TextView) findViewById(R.id.subtitle);
 		accessoryView = (ImageView) findViewById(R.id.accessory);
 
-		int[] colorDefault = indexPath.getRow() % 2 == 0 ? color_line1_default : color_line2_default;
-		int[] colorPressed = indexPath.getRow() % 2 == 0 ? color_line1_pressed : color_line2_pressed;
-
-		// Assign the right backgroundDrawable according to the cell's position in the group
-		Drawable backgroundDrawable;
-		if (indexPath.getRowsCount() == 1) {
-			backgroundDrawable = new UITableCellDrawable(10.0f, 10.0f, colorDefault, colorPressed, border_color);
-		} else {
-			if (indexPath.isFirstCellOfGroup()) {
-				backgroundDrawable = new UITableCellDrawable(10.0f, 0, colorDefault, colorPressed, border_color);
-			} else if (indexPath.isLastCellOfGroup()) {
-				backgroundDrawable = new UITableCellDrawable(0, 10.0f, colorDefault, colorPressed, border_color);
-			} else {
-				backgroundDrawable = new UITableCellDrawable(0, 0, colorDefault, colorPressed, border_color);
-			}
-		}
-
-		// Add extra space if this cell is the last one
-		int bottomInset = 0;
-		if (indexPath.isLastCell()) {
-			bottomInset = INSET;
-		}
-		setBackgroundDrawable(new InsetDrawable(backgroundDrawable, INSET, 0, INSET, bottomInset));
+		// Set default color
+		setBackgroundColor(colorLineDefault, colorLinePressed);
 
 		// Increase the touchable area for accessoryView
 		post(getTouchDelegateAction(this, accessoryView, 30, 30, 30, 30));
@@ -83,16 +64,6 @@ public class UITableCellView extends LinearLayout {
 		this(context, indexPath);
 		setTitle(title);
 		setSubtitle(subtitle);
-	}
-
-	private void initColors() {
-		if (color_line1_default == null) {
-			color_line1_default = new int[] { getColor(R.color.base_start_color_line1_default), getColor(R.color.base_end_color_line1_default) };
-			color_line2_default = new int[] { getColor(R.color.base_start_color_line2_default), getColor(R.color.base_end_color_line2_default) };
-			color_line1_pressed = new int[] { getColor(R.color.base_start_color_line1_pressed), getColor(R.color.base_end_color_line1_pressed) };
-			color_line2_pressed = new int[] { getColor(R.color.base_start_color_line2_pressed), getColor(R.color.base_end_color_line2_pressed) };
-			border_color = getColor(R.color.cell_border);
-		}
 	}
 
 	private int getColor(int colorId) {
@@ -188,6 +159,29 @@ public class UITableCellView extends LinearLayout {
 			accessoryView.setVisibility(View.VISIBLE);
 		}
 		accessoryView.setImageDrawable(drawable);
+	}
+
+	public void setBackgroundColor(int[] colorDefault, int[] colorPressed) {
+		// Assign the right backgroundDrawable according to the cell's position in the group
+		Drawable backgroundDrawable;
+		if (indexPath.getRowsCount() == 1) {
+			backgroundDrawable = new UITableCellDrawable(10.0f, 10.0f, colorDefault, colorPressed, borderColor);
+		} else {
+			if (indexPath.isFirstCellOfGroup()) {
+				backgroundDrawable = new UITableCellDrawable(10.0f, 0, colorDefault, colorPressed, borderColor);
+			} else if (indexPath.isLastCellOfGroup()) {
+				backgroundDrawable = new UITableCellDrawable(0, 10.0f, colorDefault, colorPressed, borderColor);
+			} else {
+				backgroundDrawable = new UITableCellDrawable(0, 0, colorDefault, colorPressed, borderColor);
+			}
+		}
+
+		// Add extra space if this cell is the last one
+		int bottomInset = 0;
+		if (indexPath.isLastCell()) {
+			bottomInset = INSET;
+		}
+		setBackgroundDrawable(new InsetDrawable(backgroundDrawable, INSET, 0, INSET, bottomInset));
 	}
 
 	public UITableViewInternalAccessoryListener getInternalAccessoryListener() {

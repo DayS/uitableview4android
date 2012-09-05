@@ -4,21 +4,13 @@
     <!-- LIST BORDER COLOR -->
     <color name="cell_border">#FFD3D3D3</color>
 
-    <!-- ITEM BACKGROUND COLOR - LINE 1 - DEFAULT -->
-    <color name="base_start_color_line1_default">#FFEEF0EF</color>
-    <color name="base_end_color_line1_default">#FFEEF0EF</color>
+    <!-- ITEM BACKGROUND COLOR - LINE - DEFAULT -->
+    <color name="base_start_color_line_default">#FFFFFFFF</color>
+    <color name="base_end_color_line_default">#FFFFFFFF</color>
 
-    <!-- ITEM BACKGROUND COLOR - LINE 2 - DEFAULT -->
-    <color name="base_start_color_line2_default">#FFFFFFFF</color>
-    <color name="base_end_color_line2_default">#FFFFFFFF</color>
-
-    <!-- ITEM BACKGROUND COLOR - LINE 1 - PRESSED -->
-    <color name="base_start_color_line1_pressed">#FF3590C4</color>
-    <color name="base_end_color_line1_pressed">#FF2570BA</color>
-
-    <!-- ITEM BACKGROUND COLOR - LINE 2 - PRESSED -->
-    <color name="base_start_color_line2_pressed">#FF3590C4</color>
-    <color name="base_end_color_line2_pressed">#FF2570BA</color>
+    <!-- ITEM BACKGROUND COLOR - LINE - PRESSED -->
+    <color name="base_start_color_line_pressed">#FF3590C4</color>
+    <color name="base_end_color_line_pressed">#FF2570BA</color>
 
     <!-- ITEM TEXT COLORS - STATES - PRESSED AND DEFAULT -->
     <color name="text_color_default">#000000</color>
