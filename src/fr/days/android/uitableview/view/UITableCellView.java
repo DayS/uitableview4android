@@ -51,7 +51,7 @@ public class UITableCellView extends UITableItemView {
 		accessoryView = (ImageView) findViewById(R.id.accessory);
 
 		// Set default color
-		setBackgroundColor(colorLineDefault, colorLinePressed);
+		setDefaultBackgroundColor();
 
 		// Increase the touchable area for accessoryView
 		post(getTouchDelegateAction(this, accessoryView, 30, 30, 30, 30));
@@ -154,6 +154,10 @@ public class UITableCellView extends UITableItemView {
 		}
 	}
 
+	public void setDefaultBackgroundColor() {
+		setBackgroundColor(colorLineDefault, colorLinePressed);
+	}
+
 	public void setBackgroundColor(int[] colorDefault, int[] colorPressed) {
 		// Assign the right backgroundDrawable according to the cell's position in the group
 		Drawable backgroundDrawable;
@@ -198,6 +202,12 @@ public class UITableCellView extends UITableItemView {
 		}
 
 		this.internalAccessoryListener = internalAccessoryListener;
+	}
+
+	@Override
+	public void setIndexPath(IndexPath indexPath) {
+		super.setIndexPath(indexPath);
+		setBackgroundColor(colorLineDefault, colorLinePressed);
 	}
 
 	/**

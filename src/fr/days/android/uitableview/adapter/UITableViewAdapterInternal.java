@@ -92,7 +92,8 @@ public class UITableViewAdapterInternal extends BaseAdapter {
 				convertView = null;
 			}
 			if (convertView != null) {
-				((UITableHeaderView) convertView).setIndexPath(indexPath);
+				UITableHeaderView tableHeaderView = (UITableHeaderView) convertView;
+				tableHeaderView.setIndexPath(indexPath);
 			}
 			UITableHeaderItem headerItem = tableViewAdapter.headerItemForGroup(context, indexPath);
 			UITableHeaderView headerView = tableViewAdapter.headerViewForGroup(context, indexPath, headerItem, (UITableHeaderView) convertView);
@@ -103,7 +104,11 @@ public class UITableViewAdapterInternal extends BaseAdapter {
 			}
 			if (convertView != null) {
 				// Configure the recycling view by reseting his indexpath and background
-				((UITableCellView) convertView).setIndexPath(indexPath);
+				UITableCellView tableCellView = (UITableCellView) convertView;
+				tableCellView.setIndexPath(indexPath);
+				if (!tableCellView.getIndexPath().isStateEquals(indexPath)) {
+					tableCellView.setDefaultBackgroundColor();
+				}
 			}
 			UITableCellItem cellItem = tableViewAdapter.cellItemForRow(context, indexPath);
 			UITableCellView cellView = tableViewAdapter.cellViewForRow(context, indexPath, cellItem, (UITableCellView) convertView);
