@@ -28,6 +28,20 @@ This `UITableView` is a sub-class of Android ListView and need an implementation
 
 ```java
 class SimpleUITableViewAdapter extends UITableViewAdapter {
+
+	private int[] color_line1_default;
+	private int[] color_line2_default;
+	private int[] color_line1_pressed;
+	private int[] color_line2_pressed;
+
+	public SimpleUITableViewAdapter() {
+		// Prepare two sets of colors for odd and even lines
+		color_line1_default = new int[] { getResources().getColor(R.color.base_start_color_line1_default), getResources().getColor(R.color.base_end_color_line1_default) };
+		color_line2_default = new int[] { getResources().getColor(R.color.base_start_color_line2_default), getResources().getColor(R.color.base_end_color_line2_default) };
+		color_line1_pressed = new int[] { getResources().getColor(R.color.base_start_color_line1_pressed), getResources().getColor(R.color.base_end_color_line1_pressed) };
+		color_line2_pressed = new int[] { getResources().getColor(R.color.base_start_color_line2_pressed), getResources().getColor(R.color.base_end_color_line2_pressed) };
+	}
+
 	@Override
 	public int numberOfGroups() {
 		return 4;
@@ -54,6 +68,7 @@ class SimpleUITableViewAdapter extends UITableViewAdapter {
 	public UITableHeaderView headerViewForGroup(Context context, IndexPath indexPath, UITableHeaderItem headerItem, UITableHeaderView convertView) {
 		UITableHeaderView headerView;
 		if (convertView == null) {
+			// If the recycled view is null, we just creating one
 			headerView = new UITableHeaderView(context, indexPath);
 		} else {
 			headerView = (UITableHeaderView) convertView;
@@ -68,6 +83,7 @@ class SimpleUITableViewAdapter extends UITableViewAdapter {
 	public UITableCellView cellViewForRow(Context context, IndexPath indexPath, UITableCellItem cellItem, UITableCellView convertView) {
 		UITableCellView cellView;
 		if (convertView == null) {
+			// If the recycled view is null, we just creating one with cell's commons parameters
 			cellView = new UITableCellView(context, indexPath);
 			cellView.setMinimumHeight(80);
 			cellView.setAccessory(AccessoryType.DISCLOSURE);
@@ -77,6 +93,14 @@ class SimpleUITableViewAdapter extends UITableViewAdapter {
 
 		cellView.setTitle(cellItem.title);
 		cellView.setSubtitle(cellItem.subtitle);
+
+		// Set alternated background color
+		if (indexPath.getRow() % 2 == 0) {
+			cellView.setBackgroundColor(color_line1_default, color_line1_pressed);
+		} else {
+			cellView.setBackgroundColor(color_line2_default, color_line2_pressed);
+		}
+
 		return cellView;
 	}
 }
