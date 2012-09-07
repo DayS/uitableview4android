@@ -35,7 +35,12 @@ public class UITableHeaderView extends UITableItemView {
 	}
 
 	public void setTitle(String title) {
-		this.titleView.setText(title);
+		if (title == null) {
+			titleView.setVisibility(GONE);
+		} else {
+			titleView.setVisibility(VISIBLE);
+		}
+		titleView.setText(title);
 	}
 
 }

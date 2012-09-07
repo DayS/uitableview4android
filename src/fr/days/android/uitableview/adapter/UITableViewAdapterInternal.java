@@ -95,7 +95,8 @@ public class UITableViewAdapterInternal extends BaseAdapter {
 				((UITableHeaderView) convertView).setIndexPath(indexPath);
 			}
 			UITableHeaderItem headerItem = tableViewAdapter.headerItemForGroup(context, indexPath);
-			return tableViewAdapter.headerViewForGroup(context, indexPath, headerItem, (UITableHeaderView) convertView);
+			UITableHeaderView headerView = tableViewAdapter.headerViewForGroup(context, indexPath, headerItem, (UITableHeaderView) convertView);
+			return headerView;
 		} else {
 			if (!(convertView instanceof UITableCellView)) {
 				convertView = null;
