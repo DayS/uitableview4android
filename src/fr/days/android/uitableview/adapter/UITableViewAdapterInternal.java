@@ -8,7 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import fr.days.android.uitableview.model.IndexPath;
+import fr.days.android.uitableview.model.UITableCellItem;
+import fr.days.android.uitableview.model.UITableHeaderItem;
 import fr.days.android.uitableview.view.UITableCellView;
+import fr.days.android.uitableview.view.UITableHeaderView;
 
 /**
  * Internal adapter used by Android ListView.
@@ -67,11 +70,9 @@ public class UITableViewAdapterInternal extends BaseAdapter {
 		if (indexPath == null) {
 			return null;
 		} else if (indexPath.isHeader()) {
-			return tableViewAdapter.headerForGroup(context, indexPath);
+			return tableViewAdapter.headerItemForGroup(context, indexPath);
 		} else {
-			UITableCellView cellView = tableViewAdapter.cellViewForRow(context, indexPath);
-			cellView.setInternalAccessoryListener(internalAccessoryListener);
-			return cellView;
+			return tableViewAdapter.cellItemForRow(context, indexPath);
 		}
 	}
 
@@ -82,7 +83,32 @@ public class UITableViewAdapterInternal extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		return (View) getItem(position);
+		IndexPath indexPath = retrieveIndexPathByPosition(position);
+
+		if (indexPath == null) {
+			return null;
+		} else if (indexPath.isHeader()) {
+			if (!(convertView instanceof UITableHeaderView)) {
+				convertView = null;
+			}
+			if (convertView != null) {
+				((UITableHeaderView) convertView).setIndexPath(indexPath);
+			}
+			UITableHeaderItem headerItem = tableViewAdapter.headerItemForGroup(context, indexPath);
+			return tableViewAdapter.headerViewForGroup(context, indexPath, headerItem, (UITableHeaderView) convertView);
+		} else {
+			if (!(convertView instanceof UITableCellView)) {
+				convertView = null;
+			}
+			if (convertView != null) {
+				// Configure the recycling view by reseting his indexpath and background
+				((UITableCellView) convertView).setIndexPath(indexPath);
+			}
+			UITableCellItem cellItem = tableViewAdapter.cellItemForRow(context, indexPath);
+			UITableCellView cellView = tableViewAdapter.cellViewForRow(context, indexPath, cellItem, (UITableCellView) convertView);
+			cellView.setInternalAccessoryListener(internalAccessoryListener);
+			return cellView;
+		}
 	}
 
 	/**

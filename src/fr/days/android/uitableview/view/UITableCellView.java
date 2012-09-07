@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.TouchDelegate;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import fr.days.android.uitableview.R;
 import fr.days.android.uitableview.adapter.UITableViewInternalAccessoryListener;
@@ -18,7 +17,7 @@ import fr.days.android.uitableview.drawable.UITableCellDrawable;
 import fr.days.android.uitableview.model.AccessoryType;
 import fr.days.android.uitableview.model.IndexPath;
 
-public class UITableCellView extends LinearLayout {
+public class UITableCellView extends UITableItemView {
 
 	private static final int INSET = 10;
 
@@ -26,7 +25,6 @@ public class UITableCellView extends LinearLayout {
 	private static int[] colorLinePressed;
 	private static int borderColor = Integer.MIN_VALUE;
 
-	private final IndexPath indexPath;
 	private ImageView imageView;
 	private TextView titleView;
 	private TextView subtitleView;
@@ -34,8 +32,7 @@ public class UITableCellView extends LinearLayout {
 	private UITableViewInternalAccessoryListener internalAccessoryListener;
 
 	public UITableCellView(Context context, IndexPath indexPath) {
-		super(context);
-		this.indexPath = indexPath;
+		super(context, indexPath);
 
 		if (borderColor == Integer.MIN_VALUE) {
 			borderColor = getColor(R.color.cell_border);
@@ -70,10 +67,6 @@ public class UITableCellView extends LinearLayout {
 		return getResources().getColor(colorId);
 	}
 
-	public IndexPath getIndexPath() {
-		return indexPath;
-	}
-
 	public ImageView getImageView() {
 		return imageView;
 	}
@@ -83,8 +76,8 @@ public class UITableCellView extends LinearLayout {
 			imageView.setVisibility(View.GONE);
 		} else {
 			imageView.setVisibility(View.VISIBLE);
+			imageView.setImageResource(imageResource);
 		}
-		imageView.setImageResource(imageResource);
 	}
 
 	public void setImage(Drawable drawable) {
@@ -92,8 +85,8 @@ public class UITableCellView extends LinearLayout {
 			imageView.setVisibility(View.GONE);
 		} else {
 			imageView.setVisibility(View.VISIBLE);
+			imageView.setImageDrawable(drawable);
 		}
-		imageView.setImageDrawable(drawable);
 	}
 
 	public void setImageBitmap(Bitmap bitmap) {
@@ -101,8 +94,8 @@ public class UITableCellView extends LinearLayout {
 			imageView.setVisibility(View.GONE);
 		} else {
 			imageView.setVisibility(View.VISIBLE);
+			imageView.setImageBitmap(bitmap);
 		}
-		imageView.setImageBitmap(bitmap);
 	}
 
 	public TextView getTitleView() {
@@ -130,8 +123,8 @@ public class UITableCellView extends LinearLayout {
 			subtitleView.setVisibility(View.GONE);
 		} else {
 			subtitleView.setVisibility(View.VISIBLE);
+			subtitleView.setText(subtitle);
 		}
-		subtitleView.setText(subtitle);
 	}
 
 	public ImageView getAccessoryView() {
@@ -157,8 +150,8 @@ public class UITableCellView extends LinearLayout {
 			accessoryView.setVisibility(View.GONE);
 		} else {
 			accessoryView.setVisibility(View.VISIBLE);
+			accessoryView.setImageDrawable(drawable);
 		}
-		accessoryView.setImageDrawable(drawable);
 	}
 
 	public void setBackgroundColor(int[] colorDefault, int[] colorPressed) {
