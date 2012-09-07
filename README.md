@@ -15,7 +15,8 @@ Add the UITableView in your layout :
 ```xml
 <fr.days.android.uitableview.view.UITableView
 	android:id="@+id/listView"
-	style="@style/UITableView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
 	android:layout_alignParentLeft="true"
 	android:layout_alignParentTop="true" >
 </fr.days.android.uitableview.view.UITableView>
@@ -36,20 +37,46 @@ class SimpleUITableViewAdapter extends UITableViewAdapter {
 	public int numberOfRows(int group) {
 		return (group + 1) * 2;
 	}
-
+	
 	@Override
-	public UITableHeaderView headerForGroup(Context context, IndexPath indexPath) {
-		return new UITableHeaderView(context, indexPath, "Group " + indexPath.getGroup());
+	public UITableHeaderItem headerItemForGroup(Context context, IndexPath indexPath) {
+		return new UITableHeaderItem("Group " + indexPath.getGroup());
+	}
+	
+	@Override
+	public UITableCellItem cellItemForRow(Context context, IndexPath indexPath) {
+		String title = "Cell number " + indexPath.getRow() + " in group " + indexPath.getGroup();
+		String subtitle = (indexPath.getRow() % 2 == 0) ? "Subtitle " + indexPath.getRow() : null;
+		return new UITableCellItem(title, subtitle);
 	}
 
 	@Override
-	public UITableCellView cellViewForRow(Context context, IndexPath indexPath) {
-		String title = "Cell number " + indexPath.getRow();
-		String subtitle = (indexPath.getRow() % 2 == 0) ? indexPath.toString() : null;
-		
-		UITableCellView cellView = new UITableCellView(context, indexPath, title, subtitle);
-		cellView.setMinimumHeight(80);
-		cellView.setAccessory(AccessoryType.DISCLOSURE);
+	public UITableHeaderView headerViewForGroup(Context context, IndexPath indexPath, UITableHeaderItem headerItem, UITableHeaderView convertView) {
+		UITableHeaderView headerView;
+		if (convertView == null) {
+			headerView = new UITableHeaderView(context, indexPath);
+		} else {
+			headerView = (UITableHeaderView) convertView;
+		}
+
+		headerView.setTitle(headerItem.title);
+
+		return headerView;
+	}
+
+	@Override
+	public UITableCellView cellViewForRow(Context context, IndexPath indexPath, UITableCellItem cellItem, UITableCellView convertView) {
+		UITableCellView cellView;
+		if (convertView == null) {
+			cellView = new UITableCellView(context, indexPath);
+			cellView.setMinimumHeight(80);
+			cellView.setAccessory(AccessoryType.DISCLOSURE);
+		} else {
+			cellView = (UITableCellView) convertView;
+		}
+
+		cellView.setTitle(cellItem.title);
+		cellView.setSubtitle(cellItem.subtitle);
 		return cellView;
 	}
 }
