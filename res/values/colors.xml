@@ -16,4 +16,6 @@
     <color name="text_color_default">#000000</color>
     <color name="text_color_pressed">#FFFFFF</color>
 
+    <!-- TEXT COLORS -->
+    <color name="text_color_header">#4C566C</color>
 </resources>

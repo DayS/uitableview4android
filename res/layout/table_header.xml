@@ -18,7 +18,7 @@
         android:shadowDx="0"
         android:shadowDy="1"
         android:shadowRadius="1"
-        android:textColor="#4C566C"
+        android:textColor="@color/text_color_header"
         android:textSize="18.0dp"
         android:textStyle="bold" />
 
