@@ -68,12 +68,17 @@ public class UITableViewAdapterInternal extends BaseAdapter {
 	public Object getItem(int position) {
 		IndexPath indexPath = retrieveIndexPathByPosition(position);
 		if (indexPath == null) {
-			return null;
+			throw new NullPointerException("Unable to retrieve index path for position " + position);
 		} else if (indexPath.isHeader()) {
-			return tableViewAdapter.headerItemForGroup(context, indexPath);
+			return getHeaderItem(indexPath);
 		} else {
 			return tableViewAdapter.cellItemForRow(context, indexPath);
 		}
+	}
+
+	public UITableHeaderItem getHeaderItem(IndexPath indexPath) {
+		UITableHeaderItem headerItem = tableViewAdapter.headerItemForGroup(context, indexPath);
+		return headerItem != null ? headerItem : new UITableHeaderItem();
 	}
 
 	@Override
@@ -86,7 +91,7 @@ public class UITableViewAdapterInternal extends BaseAdapter {
 		IndexPath indexPath = retrieveIndexPathByPosition(position);
 
 		if (indexPath == null) {
-			return null;
+			throw new NullPointerException("Unable to retrieve index path for position " + position);
 		} else if (indexPath.isHeader()) {
 			if (!(convertView instanceof UITableHeaderView)) {
 				convertView = null;
@@ -95,7 +100,7 @@ public class UITableViewAdapterInternal extends BaseAdapter {
 				UITableHeaderView tableHeaderView = (UITableHeaderView) convertView;
 				tableHeaderView.setIndexPath(indexPath);
 			}
-			UITableHeaderItem headerItem = tableViewAdapter.headerItemForGroup(context, indexPath);
+			UITableHeaderItem headerItem = getHeaderItem(indexPath);
 			UITableHeaderView headerView = tableViewAdapter.headerViewForGroup(context, indexPath, headerItem, (UITableHeaderView) convertView);
 			return headerView;
 		} else {
