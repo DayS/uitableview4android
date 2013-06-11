@@ -2,6 +2,8 @@
 
 UITableView4Android is an Android library providing a customized ListView with the look & field and behavior of UITableView on iOS.
 
+**Note: This is not a recommended Android UI pattern! This repo is only here in case your client insist to do this.**
+
 # Motivation
 
 Some companies are asking for mobile applications that must have the same appearance both on Android and iOS. And of course, iOS is almost always the version to fit...
